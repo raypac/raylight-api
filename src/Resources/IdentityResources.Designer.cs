@@ -39,7 +39,7 @@ namespace raylight.api.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("raylight.api.Resources.IdentityResources", typeof(IdentityResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("raylight-api.Resources.IdentityResources", typeof(IdentityResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,175 +63,143 @@ namespace raylight.api.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Change Password failed.
         /// </summary>
-        public static string ChangePasswordFailed 
-        {
-            get 
-            {
+        public static string ChangePasswordFailed {
+            get {
                 return ResourceManager.GetString("ChangePasswordFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid Login.
         /// </summary>
-        public static string InvalidLogin
-        {
-            get
-            {
+        public static string InvalidLogin {
+            get {
                 return ResourceManager.GetString("InvalidLogin", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid Password.
         /// </summary>
-        public static string InvalidPassword
-        {
-            get
-            {
+        public static string InvalidPassword {
+            get {
                 return ResourceManager.GetString("InvalidPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid token.
         /// </summary>
-        public static string InvalidToken
-        {
-            get
-            {
+        public static string InvalidToken {
+            get {
                 return ResourceManager.GetString("InvalidToken", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid User.
         /// </summary>
-        public static string InvalidUser
-        {
-            get
-            {
+        public static string InvalidUser {
+            get {
                 return ResourceManager.GetString("InvalidUser", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid verification code.
         /// </summary>
-        public static string InvalidVerificationCode
-        {
-            get
-            {
+        public static string InvalidVerificationCode {
+            get {
                 return ResourceManager.GetString("InvalidVerificationCode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login failed.
         /// </summary>
-        public static string LoginFailed
-        {
-            get
-            {
+        public static string LoginFailed {
+            get {
                 return ResourceManager.GetString("LoginFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Refresh Failed.
         /// </summary>
-        public static string RefreshFailed
-        {
-            get
-            {
+        public static string RefreshFailed {
+            get {
                 return ResourceManager.GetString("RefreshFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Registration Error.
         /// </summary>
-        public static string RegistrationError
-        {
-            get
-            {
+        public static string RegistrationError {
+            get {
                 return ResourceManager.GetString("RegistrationError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Request Invalid.
         /// </summary>
-        public static string RequestInvalid
-        {
-            get
-            {
+        public static string RequestInvalid {
+            get {
                 return ResourceManager.GetString("RequestInvalid", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Token expired.
         /// </summary>
-        public static string TokenExpired
-        {
-            get
-            {
+        public static string TokenExpired {
+            get {
                 return ResourceManager.GetString("TokenExpired", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Token not found.
         /// </summary>
-        public static string TokenNotFound
-        {
-            get
-            {
+        public static string TokenNotFound {
+            get {
                 return ResourceManager.GetString("TokenNotFound", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Token dont match.
         /// </summary>
-        public static string TokenNotMatched
-        {
-            get
-            {
+        public static string TokenNotMatched {
+            get {
                 return ResourceManager.GetString("TokenNotMatched", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Token is revoked.
         /// </summary>
-        public static string TokenRevoked
-        {
-            get
-            {
+        public static string TokenRevoked {
+            get {
                 return ResourceManager.GetString("TokenRevoked", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown error.
         /// </summary>
-        public static string UnknownError
-        {
-            get
-            {
+        public static string UnknownError {
+            get {
                 return ResourceManager.GetString("UnknownError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to User already exist.
         /// </summary>
-        public static string UserAlreadyExist
-        {
-            get
-            {
+        public static string UserAlreadyExist {
+            get {
                 return ResourceManager.GetString("UserAlreadyExist", resourceCulture);
             }
         }
