@@ -1,0 +1,44 @@
+name: Build and Publish raylight-api
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+env:
+  AZURE_WEBAPP_NAME: raylight-api
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
+  RAYLIGHT_API_APP_SETTINGS: ${{ secrets.RAYLIGHT_API_APP_SETTINGS }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-versions: '8.0.x'
+
+      - name: Setup App Settings
+        run: |
+          echo "$RAYLIGHT_API_APP_SETTINGS" > ./src/appsettings.json
+
+      - name: Restore Solution
+        run: dotnet restore ./src/raylight-api.sln
+
+      - name: Build Solution
+        run: dotnet build ./src/raylight-api.sln --configuration Release --no-restore
+
+      - name: Publish Solution
+        run: dotnet publish ./src/raylight-api.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        
+      - name: Deploy Solution
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
