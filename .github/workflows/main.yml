@@ -21,7 +21,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-versions: '8.0.x'
+          dotnet-versions: '9.0.x'
 
       - name: Setup App Settings
         run: |
