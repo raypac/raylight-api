@@ -30,7 +30,7 @@ jobs:
           echo "$RAYLIGHT_API_APP_SETTINGS" > ./src/WebApi/appsettings.json
 
       - name: Restore Solution
-        run: dotnet restore ./src/raylight-api.sln
+        run: dotnet restore ./RaylightApi.sln
 
       - name: Build Solution
         run: dotnet build ./RaylightApi.sln --configuration Release --no-restore
