@@ -27,16 +27,16 @@ jobs:
 
       - name: Setup App Settings
         run: |
-          echo "$RAYLIGHT_API_APP_SETTINGS" > ./src/appsettings.json
+          echo "$RAYLIGHT_API_APP_SETTINGS" > ./src/WebApi/appsettings.json
 
       - name: Restore Solution
         run: dotnet restore ./src/raylight-api.sln
 
       - name: Build Solution
-        run: dotnet build ./src/raylight-api.sln --configuration Release --no-restore
+        run: dotnet build ./RaylightApi.sln --configuration Release --no-restore
 
       - name: Publish Solution
-        run: dotnet publish ./src/raylight-api.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        run: dotnet publish ./RaylightApi.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
         
       - name: Deploy Solution
         uses: azure/webapps-deploy@v3
