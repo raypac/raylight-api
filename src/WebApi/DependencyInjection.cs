@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Quartz;
-using RaylightApi.Application.Common;
-using RaylightApi.Infrastructure.BackgroundJobs;
 using System.Text;
 
 namespace RaylightApi.WebApi;
