@@ -7,8 +7,8 @@ namespace RaylightApi.Domain.ValueObjects;
 
 public sealed class Email : ValueObject
 {
-    // ✅ Matches: user @example.com
-    // ❌ Rejects: user @@example, user@.com, spaces, missing @
+    // Matches: user @example.com
+    // Rejects: user @@example, user@.com, spaces, missing @
     private const string EmailPattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
 
     private Email(string value)
