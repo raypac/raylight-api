@@ -20,6 +20,7 @@ public class ProcessTokenExpiryJob : IJob
         var refreshTokenVerifications = await _applicationDbContext.AspNetRefreshTokenVerification
                                         .Where(x => x.State == RefreshTokenState.Valid)
                                         .Take(10)
+                                        .OrderBy(x => x.Id)
                                         .ToListAsync();
 
         foreach(var refreshToken in refreshTokenVerifications)
