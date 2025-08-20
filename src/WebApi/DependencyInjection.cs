@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Quartz;
+using RaylightApi.Application.Common;
 using RaylightApi.Infrastructure.BackgroundJobs;
 using System.Text;
 
@@ -76,12 +77,11 @@ public static class DependencyInjection
                     trigger => trigger.ForJob(jobKey)
                                       .WithSimpleSchedule(
                                             schedule =>
-                                            schedule.WithIntervalInSeconds(10)
+                                            schedule.WithIntervalInSeconds(configuration["Job:IntervalInSeconds"].ToInt())
                                                     .RepeatForever()));
         });
 
         services.AddQuartzHostedService();
-
 
         return services;
     }
