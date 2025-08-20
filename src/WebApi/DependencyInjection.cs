@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Quartz;
+using RaylightApi.Infrastructure.BackgroundJobs;
 using System.Text;
 
 namespace RaylightApi.WebApi;
@@ -63,6 +65,23 @@ public static class DependencyInjection
         });
 
         services.AddSingleton(tokenValidationParameters);
+
+        services.AddQuartz(configure =>
+        {
+            var jobKey = new JobKey(nameof(ProcessTokenExpiryJob));
+
+            configure
+                .AddJob<ProcessTokenExpiryJob>(jobKey)
+                .AddTrigger(
+                    trigger => trigger.ForJob(jobKey)
+                                      .WithSimpleSchedule(
+                                            schedule =>
+                                            schedule.WithIntervalInSeconds(10)
+                                                    .RepeatForever()));
+        });
+
+        services.AddQuartzHostedService();
+
 
         return services;
     }
