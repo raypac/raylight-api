@@ -12,13 +12,6 @@ builder
         .AddPresentation()
         .AddWebApi(builder.Configuration);
 
-builder
-    .Logging
-        .ClearProviders()
-        .AddConsole()
-        .AddDebug()
-        .AddAzureWebAppDiagnostics();
-
 var app = builder.Build();
 
 app.UseSwagger();

@@ -1,13 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using RaylightApi.Application.Abstractions.Services;
 using RaylightApi.Application.Features.RaylightApi.Commands;
 using RaylightApi.Presentation.Abstractions;
 using RaylightApi.Presentation.Contracts.MemberIdentity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
-using Microsoft.Extensions.Logging;
 
 namespace RaylightApi.Presentation.Controllers;
 
@@ -17,16 +16,13 @@ namespace RaylightApi.Presentation.Controllers;
 public sealed class MemberController : ApiController
 {
     private readonly ICurrentUserService _currentUserService;
-    private readonly ILogger _logger;
 
     public MemberController(
         ISender sender,
-        ICurrentUserService currentUserService,
-        ILogger logger) 
+        ICurrentUserService currentUserService) 
         : base(sender)
     {
         _currentUserService = currentUserService;
-        _logger = logger;
     }
 
     [AllowAnonymous]
@@ -214,11 +210,10 @@ public sealed class MemberController : ApiController
             var email = user.Claims
                 .FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
 
+            var result = $"WhoIAm-HttpContext.User: {user}" + Environment.NewLine +
+                         $"WhoIAm-CurrentUserService.UserId: {_currentUserService.UserId}";
             return Ok(email);
         }
-
-        _logger.LogInformation($"WhoIAm-HttpContext.User: {user}");
-        _logger.LogInformation($"WhoIAm-CurrentUserService.UserId: {_currentUserService.UserId}");
 
         return BadRequest("Bad Request");
     }
