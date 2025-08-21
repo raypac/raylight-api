@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace RaylightApi.Presentation.Controllers;
 
@@ -15,14 +16,17 @@ namespace RaylightApi.Presentation.Controllers;
 [Authorize]
 public sealed class MemberController : ApiController
 {
-    private readonly ICurrentUserService currentUserService;
+    private readonly ICurrentUserService _currentUserService;
+    private readonly ILogger _logger;
 
     public MemberController(
         ISender sender,
-        ICurrentUserService currentUserService) 
+        ICurrentUserService currentUserService,
+        ILogger logger) 
         : base(sender)
     {
-        this.currentUserService = currentUserService;
+        _currentUserService = currentUserService;
+        _logger = logger;
     }
 
     [AllowAnonymous]
@@ -212,6 +216,9 @@ public sealed class MemberController : ApiController
 
             return Ok(email);
         }
+
+        _logger.LogInformation($"WhoIAm-HttpContext.User: {user}");
+        _logger.LogInformation($"WhoIAm-CurrentUserService.UserId: {_currentUserService.UserId}");
 
         return BadRequest("Bad Request");
     }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Quartz;
+using RaylightApi.Application.Common;
+using RaylightApi.Infrastructure.BackgroundJobs;
 using System.Text;
 
 namespace RaylightApi.WebApi;
@@ -18,6 +21,7 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
 
         services.AddEndpointsApiExplorer();
+
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc(Constant.AppVersion, new OpenApiInfo { Title = Constant.AppName, Version = Constant.AppVersion });
@@ -64,21 +68,23 @@ public static class DependencyInjection
 
         services.AddSingleton(tokenValidationParameters);
 
-        //services.AddQuartz(configure =>
-        //{
-        //    var jobKey = new JobKey(nameof(ProcessTokenExpiryJob));
+        services.AddQuartz(configure =>
+        {
+            var jobKey = new JobKey(nameof(ProcessTokenExpiryJob));
 
-        //    configure
-        //        .AddJob<ProcessTokenExpiryJob>(jobKey)
-        //        .AddTrigger(
-        //            trigger => trigger.ForJob(jobKey)
-        //                              .WithSimpleSchedule(
-        //                                    schedule =>
-        //                                    schedule.WithIntervalInSeconds(configuration["Job:IntervalInSeconds"].ToInt())
-        //                                            .RepeatForever()));
-        //});
+            configure
+                .AddJob<ProcessTokenExpiryJob>(jobKey)
+                .AddTrigger(
+                    trigger => trigger.ForJob(jobKey)
+                                      .WithSimpleSchedule(
+                                            schedule =>
+                                            schedule.WithIntervalInSeconds(configuration["Job:IntervalInSeconds"].ToInt())
+                                                    .RepeatForever()));
+        });
 
-        //services.AddQuartzHostedService();
+        services.AddQuartzHostedService();
+
+
 
         return services;
     }
