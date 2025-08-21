@@ -84,8 +84,6 @@ public static class DependencyInjection
 
         services.AddQuartzHostedService();
 
-
-
         return services;
     }
 }
