@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RaylightApi.Application.Abstractions.Services;
 using RaylightApi.Domain.ValueObjects;
-//using SendGrid;
-//using SendGrid.Helpers.Mail;
 using System.Diagnostics;
 
 namespace RaylightApi.Infrastructure.Services;
@@ -40,22 +38,6 @@ internal sealed class EmailService : IEmailService
 
     private Task<bool> SendEmailAsync(Email email, string subject, string htmlMessage, CancellationToken cancellationToken = default)
     {
-        //var sendGridKey = _configuration["Email:SendGridKey"];
-        //var defaultSender = _configuration["Email:DefaultSender"];
-        //var client = new SendGridClient(sendGridKey);
-        //var msg = new SendGridMessage()
-        //{
-        //    From = new EmailAddress(defaultSender, "Raylight API Notification"),
-        //    Subject = subject,
-        //    PlainTextContent = htmlMessage,
-        //    HtmlContent = htmlMessage
-        //};
-
-        //msg.AddTo(new EmailAddress(email.Value));
-
-        //var response = await client.SendEmailAsync(msg, cancellationToken);
-
-        //return response.IsSuccessStatusCode;
         return Task.FromResult(true);
     }
 }
