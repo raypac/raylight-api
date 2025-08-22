@@ -206,7 +206,7 @@ public sealed class MemberController : ApiController
             var email = user.Claims
                 .FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
 
-            var result = $"WhoIAm-HttpContext.User: {user}" + Environment.NewLine +
+            var result = $"WhoIAm-HttpContext.User: {email}" + Environment.NewLine +
                          $"WhoIAm-CurrentUserService.UserId: {_currentUserService.UserId}";
             return Ok(result);
         }
