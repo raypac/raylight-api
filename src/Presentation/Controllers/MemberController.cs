@@ -90,7 +90,7 @@ public sealed class MemberController : ApiController
 
     [HttpPost(Constant.Logout)]
     public async Task<IActionResult> Logout(
-        [FromBody] LoginRequest request,
+        [FromBody] LogoutRequest request,
         CancellationToken cancellationToken)
     {
         var command = new MemberLogoutCommand(request.Email);
@@ -114,11 +114,9 @@ public sealed class MemberController : ApiController
         CancellationToken cancellationToken)
     {
         var accessToken = Request.Headers[HeaderNames.Authorization];
-        var user = HttpContext.User;
-        var email = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
 
         var jwt = accessToken.FirstOrDefault()?.Replace("Bearer", string.Empty)?.Trim();
-        var command = new MemberRefreshTokenCommand(email, jwt, request.RefreshToken);
+        var command = new MemberRefreshTokenCommand(_currentUserService.UserId, jwt, request.RefreshToken);
 
         var result = await Sender.Send(command, cancellationToken);
 
@@ -139,11 +137,9 @@ public sealed class MemberController : ApiController
         CancellationToken cancellationToken)
     {
         var accessToken = Request.Headers[HeaderNames.Authorization];
-        var user = HttpContext.User;
-        var email = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
 
         var jwt = accessToken.FirstOrDefault()?.Replace("Bearer", string.Empty)?.Trim();
-        var command = new MemberChangePasswordCommand(email, request.Password, request.NewPassword);
+        var command = new MemberChangePasswordCommand(_currentUserService.UserId, request.Password, request.NewPassword);
 
         var result = await Sender.Send(command, cancellationToken);
 
@@ -212,10 +208,9 @@ public sealed class MemberController : ApiController
 
             var result = $"WhoIAm-HttpContext.User: {user}" + Environment.NewLine +
                          $"WhoIAm-CurrentUserService.UserId: {_currentUserService.UserId}";
-            return Ok(email);
+            return Ok(result);
         }
 
         return BadRequest("Bad Request");
     }
-
 }

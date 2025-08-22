@@ -114,7 +114,7 @@ internal sealed class MemberIdentityRepository : IMemberIdentityRepository
 
         var code = RandomGenerator.RandomNumeric();
         var emailVerificationToken = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
-        var currentUser = _currentUserService.CurrentUser;
+        var currentUser = _currentUserService.UserId;
         var dateAdded = DateTime.UtcNow;
 
         var memberVerification = new AspNetUserVerification()
@@ -166,7 +166,7 @@ internal sealed class MemberIdentityRepository : IMemberIdentityRepository
         }
 
         userVerification.State = MemberVerificationState.Completed;
-        userVerification.ModifiedBy = _currentUserService.CurrentUser;
+        userVerification.ModifiedBy = _currentUserService.UserId;
         userVerification.ModifiedOnUtc = DateTime.UtcNow;
 
         _applicationDbContext.AspNetUserVerifications.Update(userVerification);
@@ -266,7 +266,7 @@ internal sealed class MemberIdentityRepository : IMemberIdentityRepository
             return Result.Failure<bool>(DomainErrors.MemberIdentityError.MemberNotFound);
         }
 
-        var currentUser = _currentUserService.CurrentUser;
+        var currentUser = _currentUserService.UserId;
         var dateAdded = DateTime.UtcNow;
 
         var refreshTokenVerification = await _applicationDbContext.AspNetRefreshTokenVerification
@@ -306,7 +306,7 @@ internal sealed class MemberIdentityRepository : IMemberIdentityRepository
 
     public async Task<Result<bool>> UpdateRefreshTokenVerificationAsync(Member member, Token token)
     {
-        var currentUser = _currentUserService.CurrentUser;
+        var currentUser = _currentUserService.UserId;
         var dateAdded = DateTime.UtcNow;
 
         var refreshTokenVerification = await _applicationDbContext.AspNetRefreshTokenVerification
@@ -349,7 +349,7 @@ internal sealed class MemberIdentityRepository : IMemberIdentityRepository
 
     public async Task<Result<bool>> RevokeRefreshTokenVerificationAsync(Member member)
     {
-        var currentUser = _currentUserService.CurrentUser;
+        var currentUser = _currentUserService.UserId;
         var dateAdded = DateTime.UtcNow;
 
         var refreshTokenVerification = await _applicationDbContext.AspNetRefreshTokenVerification
