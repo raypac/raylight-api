@@ -5,11 +5,11 @@ runs:
   steps:
 
     - name: Build Solution
-      run: dotnet build ./RaylightApi.sln --configuration Release --no-restore
+      run: dotnet build ./src/WebApi/WebApi.csproj --configuration Release --no-restore
       shell: bash
 
     - name: Publish Solution
-      run: dotnet publish ./RaylightApi.sln --configuration Release --no-build --output '$PACKAGE_PATH'
+      run: dotnet publish ./src/WebApi/WebApi.csproj --configuration Release --no-build --output '$PACKAGE_PATH'
       shell: bash
       env:
         PACKAGE_PATH: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
