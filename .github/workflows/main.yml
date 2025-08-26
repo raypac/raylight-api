@@ -16,12 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-  
-      - name: Configuration Setup
+      - name: Configuration and Setup
         uses: ./.github/actions/setup-action
 
-      - name: Configuration Setup
+      - name: Unit Test
         uses: ./.github/actions/unit-test-action
 
       - name: Build and Publish
