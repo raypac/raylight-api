@@ -1,0 +1,13 @@
+name: 'Build and Publish Application'
+description: 'Build and Publish Application'
+runs:
+  using: "composite"
+  steps:
+
+    - name: Build Solution
+      run: dotnet build ./RaylightApi.sln --configuration Release --no-restore
+
+    - name: Publish Solution
+      run: dotnet publish ./RaylightApi.sln --configuration Release --no-build --output '$PACKAGE_PATH'
+      with:
+        PACKAGE_PATH: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

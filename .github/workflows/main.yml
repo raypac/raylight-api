@@ -1,4 +1,4 @@
-name: Build and Publish raylight-api
+name: Unit Test, Build and Publish (raylight-api)
 
 on:
   workflow_dispatch:
@@ -17,30 +17,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+  
+      - name: Configuration Setup
+        uses: ./.github/actions/setup-action
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
+      - name: Configuration Setup
+        uses: ./.github/actions/unit-test-action
 
-      - name: Setup App Settings
-        run: |
-          echo "$RAYLIGHT_API_APP_SETTINGS" > ./src/WebApi/appsettings.json
+      - name: Build and Publish
+        uses: ./.github/actions/build-action
 
-      - name: Restore Solution
-        run: dotnet restore ./RaylightApi.sln
-
-      - name: Build Solution
-        run: dotnet build ./RaylightApi.sln --configuration Release --no-restore
-
-      - name: Publish Solution
-        run: dotnet publish ./RaylightApi.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
-        
-      - name: Deploy Solution
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Deploy
+        uses: ./.github/actions/deploy-action

@@ -1,0 +1,20 @@
+name: 'Unit Testing'
+description: 'Unit Testing'
+runs:
+  using: "composite"
+  steps:
+  
+    - name: Run unit tests (Architecture)
+      run: dotnet test ./test/Architecture.Tests/Architecture.Tests.csproj --configuration Release --logger "trx;LogFileName=architecture-test-results.trx" --results-directory test-results
+      shell: bash
+      
+    - name: Run unit tests
+      run: dotnet test ./test/Domain.Tests/Domain.Tests.csproj --configuration Release --logger "trx;LogFileName=domain-test-results.trx" --results-directory test-results
+      shell: bash      
+
+    - name: Publish Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: test-results/

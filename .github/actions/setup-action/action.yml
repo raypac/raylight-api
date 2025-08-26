@@ -1,0 +1,20 @@
+name: 'Configuration Setup'
+description: 'Configuration Setup'
+runs:
+  using: "composite"
+  steps:
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          9.0.x
+          
+    - name: Setup App Settings
+      run: |
+        echo "$APP_SETTINGS" > ./src/WebApi/appsettings.json
+      with:
+        APP_SETTINGS: ${{ env.RAYLIGHT_API_APP_SETTINGS }}
+
+    - name: Restore Solution
+      run: dotnet restore ./RaylightApi.sln
