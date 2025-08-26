@@ -12,8 +12,10 @@ runs:
     - name: Setup App Settings
       run: |
         echo "$APP_SETTINGS" > ./src/WebApi/appsettings.json
-      with:
+      shell: bash
+      env:
         APP_SETTINGS: ${{ env.RAYLIGHT_API_APP_SETTINGS }}
 
     - name: Restore Solution
       run: dotnet restore ./RaylightApi.sln
+      shell: bash
