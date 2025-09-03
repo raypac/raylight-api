@@ -246,9 +246,9 @@ internal sealed class MemberIdentityRepository : IMemberIdentityRepository
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(identityUser);
 
-        var changePasswordResult = await _userManager.ChangePasswordAsync(identityUser, resetToken, newPassword.Value);
+        var resetPasswordResult = await _userManager.ResetPasswordAsync(identityUser, resetToken, newPassword.Value);
 
-        if (!changePasswordResult.Succeeded)
+        if (!resetPasswordResult.Succeeded)
         {
             return Result.Failure<bool>(DomainErrors.MemberIdentityError.ChangePasswordFailed);
         }

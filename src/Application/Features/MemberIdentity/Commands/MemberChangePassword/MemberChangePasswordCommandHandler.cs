@@ -45,7 +45,7 @@ internal sealed class MemberChangePasswordCommandHandler : ICommandHandler<Membe
 
         var memberResult = await _memberIdentityRepository.FindByEmailAsync(email.Value);
 
-        if (memberResult.Value != null)
+        if (memberResult.Value is null)
         {
             return Result.Failure<MemberChangePasswordResponse>(DomainErrors.MemberIdentityError.MemberNotFound);
         }

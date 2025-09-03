@@ -1,6 +1,82 @@
-@WebApi_HostAddress = http://localhost:5137
+@WebApi_HostAddress = https://localhost:7273
+@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NDFiMDdlMC0zYzdiLTQ0YjgtOGZjOC0wZmYyNTE2ODNiMTIiLCJlbWFpbCI6InJheW1vbmQucGFjYXlyYUBnbWFpbC5jb20iLCJuYmYiOjE3NTY5MzY5NzAsImV4cCI6MTc1OTUyODk2OSwiaWF0IjoxNzU2OTM2OTcwLCJpc3MiOiJodHRwczovL2FwaS5yYXlsaWdodC5tZSIsImF1ZCI6Imh0dHBzOi8vYXBpLnJheWxpZ2h0Lm1lIn0.FM3cIRCwbsWhSdJoY5dBJI4qe9AR5tRXEzOPW_H_KSU
+@Refresh_Token = CfDJ8BozBv9pABdBhZvrC/U9SlPQsDAPuOdq0IUeGeBalQdc6RdCZQxFWEKSc1u3olGarVUIWTd+hT1SpDr5O/3yQt4JXLMiNiVuuqH8bZQ2dyKNZ86pvBN9NRzriVvK/RUXJLGpn6RVA+Sp893gl9hrmqHrOydFJ+RviHfEUreB6mTKjc1Jspy4nZBb+zUbsD/hK1cf4JrgSO8O80HkIs2snjhRH+toj/Vebs7xxX2uFhHIyOSN6Y/MAC7PCIO5WViV+w==
 
-GET {{WebApi_HostAddress}}/weatherforecast/
+POST {{WebApi_HostAddress}}/api/Member/CreateMember
 Accept: application/json
+Content-Type: application/json
+{
+  "email": "raymond.pacayra@gmail.com",
+  "password": "P@ssw0rd!@#"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/VerifyMemberEmail
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "raymond.pacayra@gmail.com",
+  "code": "616205"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/Login
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "raymond.pacayra@gmail.com",
+  "password": "P@ssw0rd!@#"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/Logout
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+{
+  "email": "raymond.pacayra@gmail.com"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/RefreshToken
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+{
+  "refreshToken": "{{Refresh_Token}}"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/ChangePassword
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+{
+  "password": "P@ssw0rd!@#",
+  "newPassword": "P@ssw0rd!@#1"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/PasswordReset
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "raymond.pacayra@gmail.com"
+}
+###
+
+POST {{WebApi_HostAddress}}/api/Member/VerifyPasswordReset
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "raymond.pacayra@gmail.com",
+  "newPassword": "P@ssw0rd!@#1",
+  "code": "980308"
+}
+###
+
+GET {{WebApi_HostAddress}}/api/Member/WhoIAm
+Accept: application/json
+Authorization: Bearer {{Token}}
 
 ###
