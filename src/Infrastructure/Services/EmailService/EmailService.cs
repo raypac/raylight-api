@@ -2,17 +2,21 @@
 using RaylightApi.Application.Abstractions.Services;
 using RaylightApi.Domain.ValueObjects;
 using System.Diagnostics;
+using System.Net.Http.Json;
 
 namespace RaylightApi.Infrastructure.Services;
 
 internal sealed class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
+    private readonly HttpClient _httpClient;
 
     public EmailService(
-        IConfiguration configuration)
+        IConfiguration configuration,
+        HttpClient httpClient)
     {
         _configuration = configuration;
+        _httpClient = httpClient;
     }
 
     public async Task SendEmailVerificationAsync(Email email, string code, CancellationToken cancellationToken = default)
@@ -36,8 +40,22 @@ internal sealed class EmailService : IEmailService
         await SendEmailAsync(email, "Password Reset Verification", message);
     }
 
-    private Task<bool> SendEmailAsync(Email email, string subject, string htmlMessage, CancellationToken cancellationToken = default)
+    private async Task<bool> SendEmailAsync(Email email, string subject, string htmlMessage, CancellationToken cancellationToken = default)
     {
-        return Task.FromResult(true);
+        var endPoint = _configuration["Email:Endpoint"];
+
+        var emailMesage = new EmailMessage()
+        {
+            Recipients = new List<string> { email.Value },
+            Subject = subject,
+            Body = htmlMessage,
+            IsBodyHtml = true,
+        };
+
+        var response = await _httpClient.PostAsJsonAsync(endPoint, emailMesage, cancellationToken);
+
+        response.EnsureSuccessStatusCode();
+
+        return response.IsSuccessStatusCode;
     }
 }
