@@ -24,7 +24,6 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
 
-        //TODO: Move the values in config files
         services.Configure<IdentityOptions>(options =>
         {
             // Default Password settings.
@@ -44,6 +43,8 @@ public static class DependencyInjection
             options.User.AllowedUserNameCharacters = configuration["IdentityOptions:AllowedUserNameCharacters"]!.ToString();
             options.User.RequireUniqueEmail = configuration["IdentityOptions:RequireUniqueEmail"].ToBool();
         });
+
+        services.AddHttpClient();
 
         return services;
     }
